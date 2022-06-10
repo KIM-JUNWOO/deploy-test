@@ -8,6 +8,18 @@ jobs:
   continuous-deployment:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v3
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
       - name: Git Checkout
         uses: actions/checkout@v2
 
